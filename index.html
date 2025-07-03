@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Генератор технической документации НИИИС</title>
+    <link rel="stylesheet" href="./style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/4.0.2/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Генератор технической документации</h1>
+            <p>НИИИС им. Ю.Е. Седакова</p>
+        </header>
+
+        <div class="app-container">
+            <div class="input-section">
+                <h2>1. Загрузка данных</h2>
+                <div class="file-upload">
+                    <label for="json-upload">Загрузить JSON-файл:</label>
+                    <input type="file" id="json-upload" accept=".json">
+                    <button id="load-example">Загрузить пример</button>
+                </div>
+
+                <div class="manual-input">
+                    <h3>Или введите данные вручную:</h3>
+                    <textarea id="json-input" placeholder='{
+  "название": "Микросхема XYZ-2000",
+  "тип": "Аналогово-цифровой преобразователь",
+  "параметры": {
+    "напряжение": "5В",
+    "ток": "10мА",
+    "диапазон": "-40...+85°C"
+  }
+}'></textarea>
+                </div>
+
+                <h2>2. Выбор шаблона</h2>
+                <select id="template-select">
+                    <option value="default">Стандартный шаблон</option>
+                    <option value="gost">Шаблон ГОСТ/ЕСКД</option>
+                    <option value="custom">Пользовательский шаблон</option>
+                </select>
+
+                <div id="custom-template-section" class="hidden">
+                    <h3>Пользовательский шаблон (Markdown):</h3>
+                    <textarea id="custom-template" placeholder="# {{название}}\n\n## Технические характеристики\n\n- Тип: {{тип}}\n- Напряжение: {{параметры.напряжение}}\n- Ток: {{параметры.ток}}\n- Диапазон температур: {{параметры.диапазон}}"></textarea>
+                </div>
+            </div>
+
+            <div class="output-section">
+                <h2>3. Предпросмотр документации</h2>
+                <div id="preview" class="preview-container"></div>
+
+                <div class="export-buttons">
+                    <h2>4. Экспорт документа</h2>
+                    <button id="export-md">Экспорт в Markdown</button>
+                    <button id="export-html">Экспорт в HTML</button>
+                    <button id="export-pdf">Экспорт в PDF</button>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>© 2023 НИИИС им. Ю.Е. Седакова. Все права защищены.</p>
+        </footer>
+    </div>
+
+    <script src="./1.js"></script>
+</body>
+</html>
